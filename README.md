@@ -56,7 +56,7 @@ Here are all the steps that I took to get the login working, returning the token
  php artisan db:seed
  ~~~~
  
-5. At this time, you should be able to look into your database at your newly seeded users table and see your user with a new huge randomly generated api_token.
+5. At this time, you should be able to look into your database at your newly seeded users table and see your user with a huge randomly generated api_token.
 6. Update the create method in the /Controllers/Auth/RegisterController.php add `'api_token' => str_random(60)` to the create values.  My code block looks like the following.
 
  ~~~~
@@ -75,7 +75,7 @@ Here are all the steps that I took to get the login working, returning the token
     }
  ~~~~
  
-7. When there is an unsuccessful login or a successful login through the api, you will want it to return json and not redirect to a default webpage or back to a login page like the web application does.  So, I decided to just modify the login method.  When you open the LoginController.php supplied in the authorization code you will not see a login method.  That is beause it uses the AuthenticatUsers trait.  So just modify the login method in the AuthenticateUsers.php trait. in the login method add the following code within the successful login side of the if attempt statement.
+7. When there is an unsuccessful login or a successful login through the api, you will want it to return json and not redirect to a default webpage or back to a login page like the web application does.  I decided to just modify the login method.  When you open the LoginController.php supplied in the authorization code you will not see a login method.  That is beause it uses the AuthenticatUsers trait.  Just modify the login method in the AuthenticateUsers.php trait. In the login method add the following code within the successful login side of the if attempt statement.
 
      ~~~~
      if ($request->ajax() || $request->expectsJson()) {
@@ -83,7 +83,7 @@ Here are all the steps that I took to get the login working, returning the token
      }
      ~~~~
      
-8. Now we can modify the method sendFailedLoginResponse with the following code to handle login failures.
+8. Modify the method sendFailedLoginResponse with the following code to handle login failures.
 
  ~~~~
   if ($request->ajax() || $request->expectsJson()) { 
@@ -91,7 +91,7 @@ Here are all the steps that I took to get the login working, returning the token
   }
   ~~~~
   
-9. To call the login from the API client (Laravel 5.3) we need to add a route to the api.php file.  In the new 5.3 we do not have to prefix with api in the routes because Laravel automatically routes api prefix requests through the api.php route file.  However, if we wanted to ad a version level to the URI then we need to prefex with that version.  To start out I did not add a version level for the v1 code.  I figured I could start adding the version level in routes when that becomes an issue. The new route for login is as follows.  
+9. To call the login from the API client in Laravel 5.3 we need to add a route to the api.php file.  In the new 5.3 we do not have to prefix with api in the routes because Laravel automatically routes api prefix requests through the api.php route file.  However, if we wanted to ad a version level to the URI then we need to prefex with that version.  To start out I did not add a version level for the v1 code.  I figured I could start adding the version level in routes when that becomes an issue. The new route for login is as follows.  
 
  ~~~~
  Route::post('/login', 'Auth\LoginController@login');
@@ -99,7 +99,7 @@ Here are all the steps that I took to get the login working, returning the token
 
   *Note: This route looks just like other the routes in the web.php file however we did not have an api route for login in the web.php file.*
   
-10. All that's left is to test.  Assuming that your webserver is up and running then open your PostMan route and add the following URL with the POST method selected and include the parameters.
+10. All that's left is to test.  Assuming that your webserver is up and running then open your Postman route and add the following URL with the POST method selected and include the parameters.
 
  ~~~~
  http://yourserver/api/login
@@ -111,9 +111,9 @@ Here are all the steps that I took to get the login working, returning the token
 11. Now send the request.  If you have the right url and key value pairs it should.... what happened?  It routed to the home page or the page in your login controller after the successful login just like the web does.  That is because you need to add to the header Accept = application/json.  Remember we added if $request->Json() in our successful return.  After that you should receive a successful Json string.
 
 ###API Routing with Authorization using API Auth and a Token
-After you have successfully setup your api_token and performed a login, you will get a user back which has a token.  On every subsequent call you to your API's you will put the token in as a posted key value pair or on the command line for GET requests.  I suggest not putting it in the GET request because it would be visible for anyone to use.  If you put it into the key value pairs then it would be better. 
+After you have successfully setup your api_token and performed a login, you will get a user back which has a token.  On every subsequent call to your API's you will put the token in as a posted key value pair or on the command line for GET requests.  I suggest not putting it in the GET request url because it would be visible for anyone to use.  If you put it into the key value pairs then it would be better. 
 
-***Side Note:*** *I suggest using Passport with OAuth2 for "real" security and standardization.  I just wanted to get up and running and be able to actually code disconnected from the Internet.  I know most of you are probably turning your head sideways on that but some of us code remotely where there is not wifi like in planes, trains, and moving automobiies.*
+***Side Note:*** *I recommend using Passport with OAuth2 for "real" security and standardization.  I just wanted to get up and running and be able to actually code disconnected from the Internet.  I know most of you are probably turning your head sideways on that but some of us code remotely where there is not wifi like in planes, trains, and moving automobiies.*
 
 ####Steps to add the token to all API routing
 1. We can add a routing group into the api.php file which has the auth:api closure or we can add it to the end of each route.  I chose to add it to a group which looks like the following.
@@ -136,7 +136,7 @@ After you have successfully setup your api_token and performed a login, you will
     });
  ~~~~
  
-3. The think that I got caught on and burned a lot of time is in all the examples that I saw, everyone was prefixing with api/v1 or api/.  Since Laravel 5.3 has the api.php route file, this is not necessary because laravel already routes all the api prefixes to the api.php route file.
-4. One final note.  If you are going to use the same controllers and repository providers, etc. in your API calls that you use in your web application then you will need to constantly check how you were called and reroute or send back json appropriately.  There are many ways to handle this, it might be appropriate to build a return method in your parent controller. App\Http\Controllers\Controller.php file.  You could just pass either a route or a json string to that return and have it determine how your controller was called.  You could also build a return trait and use that in your controllers.  I suppose many of you will think of other ways.
+3. The thing that I got caught on and burned a lot of time is in all the examples that I saw, everyone was prefixing with api/v1 or api/.  Since Laravel 5.3 has the api.php route file, this is not necessary because laravel already routes all the api prefixes to the api.php route file.
+4. One final note.  If you are going to use the same controllers and repository providers, etc. in your API calls that you use in your web application then you will need to constantly check how you were called and reroute or send back json appropriately just like we had to do in our login method response.  There are many ways to handle this, it might be appropriate to build a return method in your parent controller. App\Http\Controllers\Controller.php file.  You could just pass either a route or a json string to that return and have it determine how your controller was called.  You could also build a return trait and use that in your controllers.  I suppose you will think of other ways that make sense to you.
 
-
+I hope this may help someone else but at the very minimum, I have captured this info for the next time I need to set this up.
