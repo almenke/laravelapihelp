@@ -31,8 +31,8 @@ Here are all the steps that I took to get the login working, returning the token
   $table->string('api_token', 60)->unique();
   ~~~~
   
-2. Change the User.php model and add the column to the fillable array.  I saw a video where a suggestion was to also put this in the $hidden array.  I didn't do this because aftre login, I wanted to just return the entire user and obviously we need the token on the login return.
-3. If you have  a user seeder then you will want to add the following line to init your api_token column in the user seeder code.  My user seeder looks something like this.
+2. Change the User.php model and add the column to the fillable array.  I saw a video where a suggestion was to also put this in the $hidden array.  I didn't do this because after login, I wanted to just return the entire user in the Json return and obviously we need the token on the login return to pass in future calls.
+3. If you have a user seeder then you will want to add the following line to init your api_token column in the user seeder code.  My user seeder looks something like this.
 
  ~~~~
   User::create(
