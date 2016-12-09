@@ -22,7 +22,7 @@ Here are all the steps that I took to get the login working, returning the token
 
 ***Side Note:*** *I suggest using* [Google Chrome Postman](https://www.getpostman.com) to test your API.  This is a great tool from within Chrome and saves a ton of time.  You don't have to write a test app or use Curl from the command line.
 
-***And one more Side Note before we start, most of this readme is just based on pulling out the obvious forest that I didn't see because I was standing in the trees.***
+***And one more Side Note before we start, most of this readme is just based on locating the obvious forest that I didn't see because I was standing in the trees.***
 
 ###API Login Modification Steps and Testing using Postman
 1. Add `api_token` string to the users table by modifying the users migration file.
