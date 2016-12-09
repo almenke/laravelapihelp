@@ -40,7 +40,7 @@ Here are all the steps that I took to get the login working, returning the token
                 'fname' => 'Al',
                 'lname' => 'Menke',
                 'role_id' => 5,
-                'email' => 'al.menke@gmail.com',
+                'email' => 'myemailaddress@somewhere.com',
                 'password' => Hash::make('mypassword'),
                 'active' => 1,
                 'api_token' => str_random(60)
