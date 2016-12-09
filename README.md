@@ -16,7 +16,7 @@ Develop API's to utilize the previously developed Laravel 5.3 web application ut
 3. Do not start with Passport and OAuth2, but leave the door open to using it in the future.
 
 ##Authentication & Authorization
-How do we call login as an API and receive a token?  I found a lot of great documents and Q&A throughout the web on how to do the routing and token passing after login but after scouring the web I did not find out how people were logging in.  Also, I knew I had to be over-thinking this and there should just be a way to utilize the existing routing and authorization that was already built out.  With the help of Jacob Bennitt's GistLog at [JacobBennett API Token Authentication in Laravel](https://gistlog.co/JacobBennett/090369fbab0b31130b51) I decided quickly understood how to modify the users table and then extrapolate that into a few more steps to get up and running.
+How do we call login as an API and receive a token?  I found a lot of great documents and Q&A throughout the web on how to do the routing and token passing after login but after scouring the web I did not find out how people were logging in.  Also, I knew I had to be over-thinking this and there should just be a way to utilize the existing routing and authorization that was already built out.  With the help of Jacob Bennitt's GistLog at [JacobBennett API Token Authentication in Laravel](https://gistlog.co/JacobBennett/090369fbab0b31130b51) I quickly understood how to modify the users table and then extrapolate that into a few more steps to get up and running.  Thanks for that start Jacob.
 
 Here are all the steps that I took to get the login working, returning the token.
 
